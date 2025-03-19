@@ -1,0 +1,30 @@
+public class Dic{
+    public static double f(double x) {
+        return -x - 2 * Math.sqrt(-x);
+    }
+
+    public static double dichotomy(double a, double b, double epsilon, double delta) {
+        while (Math.abs(b - a) > epsilon) {
+            double c = (a + b) / 2;
+            double x1 = c - delta / 2;
+            double x2 = c + delta / 2;
+
+            if (f(x1) < f(x2)) {
+                b = x2;
+            } else {
+                a = x1;
+            }
+        }
+        return (a + b) / 2;
+    }
+
+    public static void main(String[] args) {
+        double a = -18;
+        double b = 0;
+        double epsilon = 0.06;
+        double delta = 0.02;
+        double result = dichotomy(a, b, epsilon, delta);
+        System.out.println("Минимум найден в точке: " + result);
+        System.out.println("Значение функции: " + f(result));
+    }
+}
