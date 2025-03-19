@@ -1,0 +1,32 @@
+public class NewtonMethod {
+    public static double f(double x) {
+        return -x - 2 * Math.sqrt(-x);
+    }
+
+    public static double df(double x) {
+        return -1 + 1 / Math.sqrt(-x); // Первая производная
+    }
+
+    public static double d2f(double x) {
+        return 0.5 * Math.pow(-x, -1.5); // Вторая производная
+    }
+
+    public static double newtonMethod(double x0, double epsilon) {
+        double x = x0;
+        while (Math.abs(df(x)) > epsilon) {
+            if (x >= 0) {
+                throw new IllegalArgumentException("x выходит за пределы области определения функции.");
+            }
+            x = x - df(x) / d2f(x); // Формула Ньютона
+        }
+        return x;
+    }
+
+    public static void main(String[] args) {
+        double x0 = -18;
+        double epsilon = 0.06;
+        double result = newtonMethod(x0, epsilon);
+        System.out.println("Минимум найден в точке: " + result);
+        System.out.println("Значение функции: " + f(result));
+    }
+}
