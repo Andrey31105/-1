@@ -1,0 +1,32 @@
+public class Raz {
+    public static double f(double x) {
+        return -x - 2 * Math.sqrt(-x);
+    }
+
+    public static double bitwiseSearch(double a, double b, double epsilon) {
+        double minX = a;
+        double minF = f(a);
+        double step = (b - a) / 10; // Начальный шаг
+
+        while (step > epsilon) {
+            for (double x = a; x <= b; x += step) {
+                double currentF = f(x);
+                if (currentF < minF) {
+                    minF = currentF;
+                    minX = x;
+                }
+            }
+            step /= 10; // Уменьшаем шаг
+        }
+        return minX;
+    }
+
+    public static void main(String[] args) {
+        double a = -18;
+        double b = 0;
+        double epsilon = 0.06;
+        double result = bitwiseSearch(a, b, epsilon);
+        System.out.println("Минимум найден в точке: " + result);
+        System.out.println("Значение функции: " + f(result));
+    }
+}
