@@ -1,0 +1,30 @@
+public class Chord {
+    public static double f(double x) {
+        return -x - 2 * Math.sqrt(-x);
+    }
+
+    public static double df(double x) {
+        return -1 + 1 / Math.sqrt(-x); // Первая производная
+    }
+
+    public static double chordMethod(double a, double b, double epsilon) {
+        double x0 = a;
+        double x1 = b;
+
+        while (Math.abs(x1 - x0) > epsilon) {
+            double x2 = x1 - df(x1) * (x1 - x0) / (df(x1) - df(x0)); // Формула хорд
+            x0 = x1;
+            x1 = x2;
+        }
+        return x1;
+    }
+
+    public static void main(String[] args) {
+        double a = -18;
+        double b = 0;
+        double epsilon = 0.06;
+        double result = chordMethod(a, b, epsilon);
+        System.out.println("Минимум найден в точке: " + result);
+        System.out.println("Значение функции: " + f(result));
+    }
+}
