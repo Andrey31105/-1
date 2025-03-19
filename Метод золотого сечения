@@ -1,0 +1,33 @@
+public class Gold {
+    public static double f(double x) {
+        return -x - 2 * Math.sqrt(-x);
+    }
+
+    public static double goldenSection(double a, double b, double epsilon) {
+        double phi = (Math.sqrt(5) - 1) / 2; // Золотое сечение
+        double x1 = b - phi * (b - a);
+        double x2 = a + phi * (b - a);
+
+        while (Math.abs(b - a) > epsilon) {
+            if (f(x1) < f(x2)) {
+                b = x2;
+                x2 = x1;
+                x1 = b - phi * (b - a);
+            } else {
+                a = x1;
+                x1 = x2;
+                x2 = a + phi * (b - a);
+            }
+        }
+        return (a + b) / 2;
+    }
+
+    public static void main(String[] args) {
+        double a = -18;
+        double b = 0;
+        double epsilon = 0.06;
+        double result = goldenSection(a, b, epsilon);
+        System.out.println("Минимум найден в точке: " + result);
+        System.out.println("Значение функции: " + f(result));
+    }
+}
