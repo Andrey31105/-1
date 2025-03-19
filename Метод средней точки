@@ -1,0 +1,30 @@
+public class Sred {
+    public static double f(double x) {
+        return -x - 2 * Math.sqrt(-x);
+    }
+
+    public static double df(double x) {
+        return -1 + 1 / Math.sqrt(-x); // Первая производная
+    }
+
+    public static double midpointMethod(double a, double b, double epsilon) {
+        while (Math.abs(b - a) > epsilon) {
+            double c = (a + b) / 2; // Средняя точка
+            if (df(c) < 0) {
+                a = c; // Сдвигаем левую границу
+            } else {
+                b = c; // Сдвигаем правую границу
+            }
+        }
+        return (a + b) / 2;
+    }
+
+    public static void main(String[] args) {
+        double a = -18;
+        double b = 0;
+        double epsilon = 0.06;
+        double result = midpointMethod(a, b, epsilon);
+        System.out.println("Минимум найден в точке: " + result);
+        System.out.println("Значение функции: " + f(result));
+    }
+}
