@@ -1,30 +1,41 @@
-public class Chord {
-    public static double f(double x) {
-        return -x - 2 * Math.sqrt(-x);
-    }
-
-    public static double df(double x) {
-        return -1 + 1 / Math.sqrt(-x); // Первая производная
-    }
-
-    public static double chordMethod(double a, double b, double epsilon) {
-        double x0 = a;
-        double x1 = b;
-
-        while (Math.abs(x1 - x0) > epsilon) {
-            double x2 = x1 - df(x1) * (x1 - x0) / (df(x1) - df(x0)); // Формула хорд
-            x0 = x1;
-            x1 = x2;
+double chord_method(double a, double b, double tol) {
+    double x_tilda;
+    iter = 0;
+    if (derivative(a) < 0 && derivative(b) < 0) return b;
+    if (derivative(a) > 0 && derivative(b) > 0) return a;
+    while (fabs(b - a) > tol) {
+        iter++; // Увеличиваем счётчик итераций
+        // Проверка на деление на ноль
+        if (fabs(derivative(a) - derivative(b)) < 1e-9) {
+            cerr << "Ошибка: деление на ноль при вычислении x_tilda" << endl;
+            return (a + b) / 2;
         }
-        return x1;
+
+        // Вычисляем новую точку по формуле метода хорд
+        x_tilda = a - derivative(a) * (a - b) / (derivative(a) - derivative(b));
+
+        cout << "Итерация " << left << setw(4) << iter
+            << " | a = " << left << setw(15) << a << " b = " << left << setw(15) << b << " x = " << left << setw(15) << x_tilda
+            << "f'(x) = " << left << setw(15) << derivative(x_tilda)
+            << "f(x) = " << left << setw(15) << function(x_tilda) << endl;
+
+        // Проверяем условие завершения
+        if (fabs(derivative(x_tilda)) <= tol) {
+            return x_tilda;
+        }
+
+        // Определяем новый интервал поиска
+        if (derivative(x_tilda) > 0) {
+            b = x_tilda;
+        }
+        else {
+            a = x_tilda;
+        }
     }
 
-    public static void main(String[] args) {
-        double a = -18;
-        double b = 0;
-        double epsilon = 0.06;
-        double result = chordMethod(a, b, epsilon);
-        System.out.println("Минимум найден в точке: " + result);
-        System.out.println("Значение функции: " + f(result));
-    }
+    cout << "\n------------\nИтераций - " << iter << endl;
+
+    return (a + b) / 2; // Возвращаем середину оставшегося интервала
 }
+
+
