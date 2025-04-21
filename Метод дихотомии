@@ -28,3 +28,4 @@ public class Dic{
         System.out.println("Значение функции: " + f(result));
     }
 }
+
