@@ -28,3 +28,5 @@ public class Sred {
         System.out.println("Значение функции: " + f(result));
     }
 }
+
+
