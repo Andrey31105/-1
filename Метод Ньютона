@@ -30,3 +30,4 @@ public class NewtonMethod {
         System.out.println("Значение функции: " + f(result));
     }
 }
+
